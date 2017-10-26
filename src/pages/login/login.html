@@ -1,0 +1,21 @@
+<ion-navbar>
+  <ion-title>Iniciar Sesión</ion-title>
+</ion-navbar>
+
+
+<ion-content padding>
+    <img src='http://ionicmaterial.com/demo/docs/img/ionic.png'/>
+    <ion-list>
+      <ion-item>
+        <ion-label>Correo Electrónico</ion-label>
+        <ion-input type="text" [(ngModel)]="email" required></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label>Contraseña</ion-label>
+        <ion-input type="password" [(ngModel)]="password" required></ion-input>
+      </ion-item>
+      <button ion-button block color="primary" (click)="login()">Iniciar Sesión</button>
+    </ion-list>
+  </ion-content>
+  

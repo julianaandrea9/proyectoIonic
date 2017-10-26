@@ -1,17 +1,47 @@
 <ion-header>
+
   <ion-navbar>
-    <ion-title>Home</ion-title>
+    <ion-title>Inicio</ion-title>
   </ion-navbar>
+
 </ion-header>
 
+
+
 <ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
-</ion-content>
+    
+      <ion-item *ngIf="!showDeporteList()">
+        No hay productos en la base de datos
+      </ion-item>
+    
+      <ion-refresher (ionRefresh)="refreshDeporte($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+    
+      <ion-list inset *ngIf="showDeporteList()">
+        <ion-item-sliding *ngFor="let item of deporte">
+    
+          <ion-item ion-item>
+           <p> {{item.iddeporte}}</p>
+           <p>  {{item.nombredeporte}}</p>
+          </ion-item>
+    
+          <ion-item-options side="right">
+            <button ion-button (click)="editProduct(item)">
+              <ion-icon name="list"></ion-icon>
+            </button>
+            <button ion-button color="danger" (click)="deleteDeporte(item._id)">
+              <ion-icon name="trash"></ion-icon>
+            </button>
+          </ion-item-options>
+    
+        </ion-item-sliding>
+      </ion-list>
+    
+      <ion-fab right bottom>
+        <button ion-fab class="fixed" (click)="newDeporte()">
+          <ion-icon name="add"></ion-icon>
+        </button>
+      </ion-fab>
+    
+    </ion-content>
