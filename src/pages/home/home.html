@@ -1,47 +1,35 @@
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>Inicio</ion-title>
+  <ion-navbar color="primary">
+    <ion-title>
+      Lista De Deportes
+    </ion-title>
   </ion-navbar>
-
 </ion-header>
 
+<ion-content> 
+  <ion-refresher (ionRefresh)="recargar_pagina($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list reorder="true">
+    <ion-item-sliding *ngFor="let deporte of newsData; let i = index">
+    <ion-item >
+     
+        <p>{{deporte.iddeporte}}</p>
 
+        <p>{{deporte.nombredeporte}}</p>
+    </ion-item>
+    
+    <ion-item-options side="right">
+      <button ion-button-color="danger" (click)="borrar_deporte(i)">
+        <ion-icon name="trash"></ion-icon>
+        borrar
+    </button>
+    </ion-item-options>
+  </ion-item-sliding> 
 
-<ion-content padding>
-    
-      <ion-item *ngIf="!showDeporteList()">
-        No hay productos en la base de datos
-      </ion-item>
-    
-      <ion-refresher (ionRefresh)="refreshDeporte($event)">
-        <ion-refresher-content></ion-refresher-content>
-      </ion-refresher>
-    
-      <ion-list inset *ngIf="showDeporteList()">
-        <ion-item-sliding *ngFor="let item of deporte">
-    
-          <ion-item ion-item>
-           <p> {{item.iddeporte}}</p>
-           <p>  {{item.nombredeporte}}</p>
-          </ion-item>
-    
-          <ion-item-options side="right">
-            <button ion-button (click)="editProduct(item)">
-              <ion-icon name="list"></ion-icon>
-            </button>
-            <button ion-button color="danger" (click)="deleteDeporte(item._id)">
-              <ion-icon name="trash"></ion-icon>
-            </button>
-          </ion-item-options>
-    
-        </ion-item-sliding>
-      </ion-list>
-    
-      <ion-fab right bottom>
-        <button ion-fab class="fixed" (click)="newDeporte()">
-          <ion-icon name="add"></ion-icon>
-        </button>
-      </ion-fab>
-    
-    </ion-content>
+  <button ion-button color="primary" (click)="newDeporte()">
+    <ion-icon name=""></ion-icon>
+    Adicionar
+  </button>
+  </ion-list>
+</ion-content>

@@ -1,109 +1,99 @@
-import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, LoadingController, Refresher } from 'ionic-angular';
-import { DeporteServiceProvider } from '../../providers/deporte-service/deporte-service';
-import { NewDeportePage } from "../new-deporte/new-deporte";
-import { Http,Headers,RequestOptions } from '@angular/http';
-import { Deporte} from '../../models/deporte';
-@IonicPage()
+import { Component } from '@angular/core';
+import { Refresher } from "ionic-angular"
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 
+//creamos el proveedor
+import {DeporteServiceProvider} from '../../providers/deporte-service/deporte-service';
+import {Deporte} from '../../models/deporte';
+import {NewDeportePage} from '../../pages/new-deporte/new-deporte';
+
+/**
+ * Generated class for the HomePage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+
+@IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
+  providers: [DeporteServiceProvider],
 })
-export class HomePage implements OnInit{
-  token: string;
-  deporte: Array<Deporte>;
 
-  constructor(
-    public navCtrl: NavController,
-    private navParams: NavParams,
-    private alertCtrl: AlertController,
-    public deporteServices: DeporteServiceProvider
-  ) {
-    this.token = navParams.get('token');
+export class HomePage {
+ 
+ // camaras:Camara[] = [];
+ token: string;
+  loadding: any
+  newsData: any//calculamos lo que nos va a retornar los servicios 
+
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public  loaddingCtrl: LoadingController,
+    public deporteProvider: DeporteServiceProvider) {
+
+    this.loadding= this.loaddingCtrl.create({
+      content:`<ion-spinner></ion-spinner>`
+       })
+    this.getData();
+  let idUsuario = deporteProvider.getJsonData;
+  
   }
 
-  ngOnInit() {
-    this.getDeportes();
-  }
-
-  refreshDeporte(refresher: Refresher) {
-    this.deporteServices.getDeporte(this.token).then((pdct) => {
-      let respuesta = JSON.parse(pdct["_body"]);
-      this.deporte = respuesta.deporte;
-      refresher.complete();
-    }).catch((err) => {
-      refresher.complete();
-    })
-  }
-
-  newDeporte() {
+  newDeporte(){
     this.navCtrl.push(NewDeportePage, {
       token: this.token
-    });
+    });   
   }
 
-  getDeportes() {
-    this.deporteServices.getDeporte(this.token).then((pdct) => {
-      let respuesta = JSON.parse(pdct["_body"]);
-      this.deporte = respuesta.deporte;
-    }).catch((err) => {
-    })
-  }
+  getData() {
+   // this.loadding.present();
+    this.deporteProvider.getData().then((datos)=>{
+      this.newsData=datos;
+     // this.loadding.dismiss();
+    });     
+    this.deporteProvider.getJsonData().subscribe(
 
-  //editProduct(product) {
- //   this.navCtrl.push(EditProductPage, {
-   //   token: this.token,
-     // productId: product._id,
-      //product: product
-   // })
-  //}
-
-  
-  deleteDeporte(id) {
-    this.deleteConfirm((res) => {
-      if (res) {
-        this.deporteServices.deleteDeporte(this.token, id)
-          .then((pdct) => {
-            this.getDeportes();
-          })
-          .catch((err) => {
-            console.log(err);
-          })
+      result=>{
+        
+        this.newsData=result;
+        console.log("Sucess: "+ this.newsData);
+       
+      }, err =>{
+        console.error("Error:"+ err);
+      }, 
+      ()=>{
+        console.log("Cerrando loading");
+        this.loadding.dismiss();
+        console.log("getData completed ");
+        
       }
-    });
-  }
 
-  deleteConfirm(callback: any) {
-    let alert = this.alertCtrl.create({
-      title: 'Eliminar',
-      message: '¿Esta seguro que desea eliminar el deporte?',
-      buttons: [
-        {
-          text: 'No',
-          role: 'cancel',
-          handler: () => {
-            return callback(false);
-          }
-        },
-        {
-          text: 'Si',
-          handler: () => {
-            return callback(true);
-          }
-        }
-      ]
-    });
-    alert.present();
-  }
-
-
-  showDeporteList() {
+    )
     
-    if (this.deporte.length == 0) {
-      return false;
-    }
-
-    return true;
   }
+
+  recargar_pagina(refresher:Refresher)
+  {
+    console.log("Inicio del refresh");
+    setTimeout(()=>{
+      console.log("Terminó el refresh");
+     /* this.loadding= this.loaddingCtrl.create({
+        content:`<ion-spinner></ion-spinner>`
+         })*/
+         
+      this.getData();
+      refresher.complete();
+    }, 1500)
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad HomePage');
+  }
+  borrar_deporte(idx:number){
+    this.deporteProvider.deleteDeporte(idx, 1);
+    this.newsData.splice(idx, 1);
+  }
+
 }

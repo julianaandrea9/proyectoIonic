@@ -18,22 +18,7 @@ export class NewDeportePage {
     this.token = navParams.get('token');
   }
 
-  newDeporte() {
-    let postParams = {
-       
-    iddeporte: this.iddeporte,
-    nombredeporte: this.nombredeporte,
-    }
-    this.deporteService.saveDeporte(this.token,postParams).then((pdct) => {
-      alert(pdct["statusText"]);
-      this.navCtrl.setRoot(HomePage, {
-        token: this.token
-      });    
-    }).catch((err) => {
-      console.log(err);
-    })
-  }
-
+  
     ionViewDidLoad() {
     console.log('ionViewDidLoad NewDeportePage');
   }
