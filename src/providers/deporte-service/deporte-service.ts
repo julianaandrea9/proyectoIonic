@@ -75,7 +75,7 @@ export class DeporteServiceProvider {
     });
   }
 
-  public deleteDeporte(token, id) {
+  public deleteDeportes(token, id) {
     this.headersPost = new Headers({
       'Content-Type': 'application/x-www-form-urlencoded',
       'Access-Control-Allow-Origin': '*',

@@ -78,10 +78,10 @@ export class HomePage {
     console.log('Bienvenido al HomePage');
   }
 
-  deleteDeporte(id) {
+  deleteDeportes(id) {
     this.deleteConfirm((res) => {
       if (res) {
-        this.deporteProvider.deleteDeporte(this.token, id)
+        this.deporteProvider.deleteDeportes(this.token, id)
           .then((pdct) => {
             this.getData();
           })
