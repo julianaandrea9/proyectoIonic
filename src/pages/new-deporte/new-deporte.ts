@@ -10,17 +10,31 @@ import { HomePage } from '../home/home';
 })
 export class NewDeportePage {
   token: string;
-  iddeporte: number;
-  nombredeporte: string;
+  public iddeporte: string;
+  public nombredeporte: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public deporteService: DeporteServiceProvider) {
+    public deporteService: DeporteServiceProvider,
+     public navController: NavController) {
     this.token = navParams.get('token');
   }
 
-  
-    ionViewDidLoad() {
-    console.log('ionViewDidLoad NewDeportePage');
-  }
 
+  saveDeportes(token) {
+    let postParams = {
+      iddeporte: this.iddeporte,
+      nombredeporte: this.nombredeporte
+    }
+
+    this.deporteService.saveDeportes(postParams)
+      .then((user) => {
+        let respuesta = JSON.parse(user["_body"]);
+        alert("Deporte registrado con éxito");
+        this.navController.setRoot(HomePage, {
+         token: respuesta.token
+        });
+      }).catch((err) => {
+        alert("error " + err);
+      })
+  }
 }

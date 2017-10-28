@@ -6,30 +6,32 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content> 
+<ion-content>
   <ion-refresher (ionRefresh)="recargar_pagina($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-list reorder="true">
     <ion-item-sliding *ngFor="let deporte of newsData; let i = index">
-    <ion-item >
-     
+      <ion-item>
         <p>{{deporte.iddeporte}}</p>
-
         <p>{{deporte.nombredeporte}}</p>
-    </ion-item>
-    
-    <ion-item-options side="right">
-      <button ion-button-color="danger" (click)="borrar_deporte(i)">
-        <ion-icon name="trash"></ion-icon>
-        borrar
-    </button>
-    </ion-item-options>
-  </ion-item-sliding> 
+      </ion-item>
+      <ion-item-options side="left">
+        <button ion-button color="secondary" (click)="editDeporte(deporte.iddeporte)">
+          <ion-icon name="list"></ion-icon>
+        </button>
+      </ion-item-options>
+        <ion-item-options side="right">
+        <button ion-button color="danger" (click)="deleteDeporte(deporte.iddeporte)">
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </ion-item-options>
 
-  <button ion-button color="primary" (click)="newDeporte()">
-    <ion-icon name=""></ion-icon>
-    Adicionar
-  </button>
+    </ion-item-sliding>
   </ion-list>
+
+    <button ion-button round class="fixed" (click)="newDeporte()">
+      <ion-icon>Agregar Deporte</ion-icon>
+    </button>
+
 </ion-content>

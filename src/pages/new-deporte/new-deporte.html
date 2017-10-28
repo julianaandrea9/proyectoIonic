@@ -1,20 +1,20 @@
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="secondary">
     <ion-title>Nuevo deporte</ion-title>
   </ion-navbar>
 
 </ion-header>
 <ion-content padding>
-  <form (ngSubmit)="newDeporte()">
+  <form (ngSubmit)="saveDeportes()">
     <ion-list>
       <ion-item>
         <ion-label stacked>Id Deporte:</ion-label>
-        <ion-input type="text" placeholder="iddeporte" [(ngModel)]="iddeporte" name="iddeporte"></ion-input>
+        <ion-input type="text" placeholder="Id deporte"  [(ngModel)]="iddeporte" name="iddeporte"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label stacked>Nombre Deporte:</ion-label>
-        <ion-input type="text" placeholder="nombredeporte" [(ngModel)]="nombredeporte" name="nombredeporte"></ion-input>
+        <ion-input type="text" placeholder="Nombre deporte" [(ngModel)]="nombredeporte" name="nombredeporte"></ion-input>
       </ion-item>
     </ion-list>
     <div padding>

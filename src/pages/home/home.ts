@@ -1,18 +1,11 @@
 import { Component } from '@angular/core';
 import { Refresher } from "ionic-angular"
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 
-//creamos el proveedor
-import {DeporteServiceProvider} from '../../providers/deporte-service/deporte-service';
-import {Deporte} from '../../models/deporte';
-import {NewDeportePage} from '../../pages/new-deporte/new-deporte';
-
-/**
- * Generated class for the HomePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { DeporteServiceProvider } from '../../providers/deporte-service/deporte-service';
+import { Deporte } from '../../models/deporte';
+import { NewDeportePage } from '../../pages/new-deporte/new-deporte';
+import { EditDeportePage } from '../../pages/edit-deporte/edit-deporte';
 
 @IonicPage()
 @Component({
@@ -22,78 +15,112 @@ import {NewDeportePage} from '../../pages/new-deporte/new-deporte';
 })
 
 export class HomePage {
- 
- // camaras:Camara[] = [];
- token: string;
-  loadding: any
-  newsData: any//calculamos lo que nos va a retornar los servicios 
 
-  constructor(public navCtrl: NavController, 
-    public navParams: NavParams, 
-    public  loaddingCtrl: LoadingController,
+  token: string;
+  loadding: any
+  newsData: any
+
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    public loaddingCtrl: LoadingController,
+    private alertCtrl: AlertController,
     public deporteProvider: DeporteServiceProvider) {
 
-    this.loadding= this.loaddingCtrl.create({
-      content:`<ion-spinner></ion-spinner>`
-       })
+    this.loadding = this.loaddingCtrl.create({
+      content: `<ion-spinner></ion-spinner>`
+    })
     this.getData();
-  let idUsuario = deporteProvider.getJsonData;
-  
   }
 
-  newDeporte(){
+  newDeporte() {
     this.navCtrl.push(NewDeportePage, {
       token: this.token
-    });   
+    });
   }
 
   getData() {
-   // this.loadding.present();
-    this.deporteProvider.getData().then((datos)=>{
-      this.newsData=datos;
-     // this.loadding.dismiss();
-    });     
+    // this.loadding.present();
+    this.deporteProvider.getData().then((datos) => {
+      this.newsData = datos;
+      // this.loadding.dismiss();
+    });
     this.deporteProvider.getJsonData().subscribe(
 
-      result=>{
-        
-        this.newsData=result;
-        console.log("Sucess: "+ this.newsData);
-       
-      }, err =>{
-        console.error("Error:"+ err);
-      }, 
-      ()=>{
+      result => {
+
+        this.newsData = result;
+        console.log("Sucess: " + this.newsData);
+
+      }, err => {
+        console.error("Error:" + err);
+      },
+      () => {
         console.log("Cerrando loading");
         this.loadding.dismiss();
         console.log("getData completed ");
-        
+
       }
 
     )
-    
+
   }
 
-  recargar_pagina(refresher:Refresher)
-  {
+  recargar_pagina(refresher: Refresher) {
     console.log("Inicio del refresh");
-    setTimeout(()=>{
+    setTimeout(() => {
       console.log("Terminó el refresh");
-     /* this.loadding= this.loaddingCtrl.create({
-        content:`<ion-spinner></ion-spinner>`
-         })*/
-         
       this.getData();
       refresher.complete();
     }, 1500)
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad HomePage');
+    console.log('Bienvenido al HomePage');
   }
-  borrar_deporte(idx:number){
-    this.deporteProvider.deleteDeporte(idx, 1);
-    this.newsData.splice(idx, 1);
+
+  deleteDeporte(id) {
+    this.deleteConfirm((res) => {
+      if (res) {
+        this.deporteProvider.deleteDeporte(this.token, id)
+          .then((pdct) => {
+            this.getData();
+          })
+          .catch((err) => {
+            console.log(err);
+            alert("Error al eliminar el deporte");
+          })
+      }
+    });
+  }
+
+  deleteConfirm(callback: any) {
+    let alert = this.alertCtrl.create({
+      title: 'Eliminar',
+      message: 'Esta seguro que desea eliminar el deporte?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          handler: () => {
+            return callback(false);
+          }
+        },
+        {
+          text: 'Si',
+          handler: () => {
+            return callback(true);
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  editDeporte(deporte) {
+    this.navCtrl.push(EditDeportePage, {
+      token: this.token,
+      deporte: deporte
+    })
   }
 
 }

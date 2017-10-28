@@ -15,6 +15,7 @@ import { LoginPage } from '../pages/login/login';
 import { DeporteServiceProvider } from '../providers/deporte-service/deporte-service';
 import { LoginservicesProvider } from '../providers/loginservices/loginservices';
 import { NewDeportePage } from '../pages/new-deporte/new-deporte';
+import {EditDeportePage} from '../pages/edit-deporte/edit-deporte';
 import { Deporte } from '../models/deporte';
 
 @NgModule({
@@ -25,7 +26,8 @@ import { Deporte } from '../models/deporte';
     HomePage,
     TabsPage,
     LoginPage,
-    NewDeportePage
+    NewDeportePage,
+    EditDeportePage
   ],
   imports: [
     BrowserModule,

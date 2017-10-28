@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Ediatr Deporte
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form (ngSubmit)=updateDeporte()>
+    <ion-list>
+      <ion-item>
+        <ion-label stacked>Id Deporte:</ion-label>
+        <ion-input type="text" [(ngModel)]="deporte.iddeporte" name="iddeporte"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Nombre Deporte:</ion-label>
+        <ion-input type="text" [(ngModel)]="deporte.nombredeporte" name="nombredeporte"></ion-input>
+      </ion-item>
+      <br>
+      <button ion-button block type="submit">Guardar</button>
+    </ion-list>
+  </form>
+</ion-content>
