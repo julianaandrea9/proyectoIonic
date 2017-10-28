@@ -1,10 +1,12 @@
-<ion-navbar>
+<ion-navbar color="secondary">
   <ion-title>Iniciar Sesión</ion-title>
 </ion-navbar>
 
 
 <ion-content padding>
-    <img src='http://ionicmaterial.com/demo/docs/img/ionic.png'/>
+  <div align="center">
+    <img src='../assets/imgs/logo.png'/>
+  </div>
     <ion-list>
       <ion-item>
         <ion-label>Correo Electrónico</ion-label>
@@ -15,7 +17,7 @@
         <ion-label>Contraseña</ion-label>
         <ion-input type="password" [(ngModel)]="password" required></ion-input>
       </ion-item>
-      <button ion-button block color="primary" (click)="login()">Iniciar Sesión</button>
+      <button ion-button round block  color="dark" (click)="login()">Iniciar Sesión</button>
     </ion-list>
   </ion-content>
   

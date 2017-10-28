@@ -21,7 +21,7 @@
           <ion-icon name="list"></ion-icon>
         </button>
       </ion-item-options>
-        <ion-item-options side="right">
+      <ion-item-options side="right">
         <button ion-button color="danger" (click)="deleteDeportes(deporte.iddeporte)">
           <ion-icon name="trash"></ion-icon>
         </button>
@@ -29,9 +29,11 @@
 
     </ion-item-sliding>
   </ion-list>
-
-    <button ion-button round class="fixed" (click)="newDeporte()">
-      <ion-icon>Agregar Deporte</ion-icon>
+  <br>
+  <div class="page-home" padding>
+    <ion-label>Si desea agregar un deporte haga clic en el siguiente botón</ion-label>
+    <button ion-button round color="dark" type="submit" (click)="newDeporte()">
+      <ion-icon  name="md-add-circle"> </ion-icon> Agregar Deporte
     </button>
-
+  </div>
 </ion-content>

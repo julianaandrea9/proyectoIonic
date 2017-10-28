@@ -19,7 +19,6 @@ export class NewDeportePage {
     this.token = navParams.get('token');
   }
 
-
   saveDeportes(token) {
     let postParams = {
       iddeporte: this.iddeporte,
