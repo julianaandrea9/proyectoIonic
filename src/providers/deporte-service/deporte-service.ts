@@ -98,13 +98,10 @@ export class DeporteServiceProvider {
   }
 
 
-  public updateDeporte(token, id, postParams) {
-
-    let body = 'iddeporte=' + postParams.iddeporte +
-      '&nombredeporte=' + postParams.nombredeporte;
+  public updateDeportes(token, id, postParams) {
 
     this.headersPost = new Headers({
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
       'Authorization': 'Bearer ' + token
     });
@@ -114,7 +111,10 @@ export class DeporteServiceProvider {
     });
 
     return new Promise((resolve, reject) => {
-      this.http.put('http://139.162.118.169:8080/proyectoAndroid/webresources/com.android.entidades.deporte' + id, body, optionspost)
+      this.http.put('http://139.162.118.169:8080/proyectoAndroid/webresources/com.android.entidades.deporte/'+ id,{
+       iddeporte: postParams.iddeporte,
+        nombredeporte: postParams.nombredeporte
+      }, optionspost)
         .subscribe(res => {
           resolve(res);
         }, (err) => {

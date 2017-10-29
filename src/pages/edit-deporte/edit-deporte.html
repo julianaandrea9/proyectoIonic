@@ -1,24 +1,26 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>
-      Ediatr Deporte
+      Editar Deporte
     </ion-title>
   </ion-navbar>
 </ion-header>
-
 <ion-content padding>
-  <form (ngSubmit)=updateDeporte()>
+  <form (ngSubmit)=updateDeportes()>
     <ion-list>
       <ion-item>
         <ion-label stacked>Id Deporte:</ion-label>
-        <ion-input type="text" [(ngModel)]="deporte.iddeporte" name="iddeporte"></ion-input>
+        <ion-input type="text" placeholder="Id deporte" disabled [(ngModel)]="deporte.iddeporte" name="iddeporte" required></ion-input>
       </ion-item>
       <ion-item>
         <ion-label stacked>Nombre Deporte:</ion-label>
-        <ion-input type="text" [(ngModel)]="deporte.nombredeporte" name="nombredeporte"></ion-input>
+        <ion-input type="text" placeholder="Nombre deporte" [(ngModel)]="deporte.nombredeporte" name="nombredeporte" required></ion-input>
       </ion-item>
       <br>
-      <button ion-button block type="submit">Guardar</button>
+      <div padding align="center">
+        <button ion-button round color="dark" type="submit">Actualizar Deporte</button>
+      </div>
     </ion-list>
+
   </form>
 </ion-content>

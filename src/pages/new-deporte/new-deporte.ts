@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { DeporteServiceProvider } from '../../providers/deporte-service/deporte-service';
 import { HomePage } from '../home/home';
 
@@ -15,6 +15,7 @@ export class NewDeportePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public deporteService: DeporteServiceProvider,
+     public alertCtrl: AlertController,
      public navController: NavController) {
     this.token = navParams.get('token');
   }
@@ -28,12 +29,21 @@ export class NewDeportePage {
     this.deporteService.saveDeportes(postParams)
       .then((user) => {
         let respuesta = JSON.parse(user["_body"]);
-        alert("Deporte registrado con éxito");
+        this.createConfirm();
         this.navController.setRoot(HomePage, {
          token: respuesta.token
         });
       }).catch((err) => {
-        alert("error " + err);
+        console.log("error " + err);
       })
+  }
+
+  createConfirm() {
+    const alert = this.alertCtrl.create({
+      title: 'Registrado',
+      subTitle: 'El deporte se ha registrado exitosamente',
+      buttons: ['Aceptar']
+    });
+    alert.present();
   }
 }

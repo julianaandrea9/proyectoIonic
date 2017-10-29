@@ -17,8 +17,8 @@
         <p>{{deporte.nombredeporte}}</p>
       </ion-item>
       <ion-item-options side="left">
-        <button ion-button color="secondary" (click)="editDeporte(deporte.iddeporte)">
-          <ion-icon name="list"></ion-icon>
+        <button ion-button color="secondary" (click)="editDeporte(deporte)">
+          <ion-icon name="md-create"></ion-icon>
         </button>
       </ion-item-options>
       <ion-item-options side="right">
@@ -33,7 +33,7 @@
   <div class="page-home" padding>
     <ion-label>Si desea agregar un deporte haga clic en el siguiente botón</ion-label>
     <button ion-button round color="dark" type="submit" (click)="newDeporte()">
-      <ion-icon  name="md-add-circle"> </ion-icon> Agregar Deporte
+      <ion-icon  name="md-add-circle" > </ion-icon> Agregar Deporte
     </button>
   </div>
 </ion-content>

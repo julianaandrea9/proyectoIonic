@@ -1,5 +1,6 @@
-import { Component,NgModule } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { Http, Headers, RequestOptions } from '@angular/http';
 
 import { HomePage } from "../home/home";
 import { Deporte } from '../../models/deporte';
@@ -13,9 +14,12 @@ import { DeporteServiceProvider } from '../../providers/deporte-service/deporte-
 export class EditDeportePage {
   public token: string;
   public deporte: Deporte;
+  public iddeporte: string;
+  public nombredeporte: string;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
+    public alertCtrl: AlertController,
     public deporteService: DeporteServiceProvider) {
 
     this.token = navParams.get('token');
@@ -23,22 +27,30 @@ export class EditDeportePage {
   }
 
 
-  updateDeporte() {
-
-    if (!this.deporte.iddeporte) {
-      return;
+  updateDeportes() {
+    let postParams = {
+      iddeporte: this.iddeporte,
+      nombredeporte: this.nombredeporte
     }
-
-    this.deporteService.updateDeporte(this.token, this.deporte.iddeporte, this.deporte)
-      .then((pdct) => {
-        alert('Se actualizó correctamente el deporte')
+    this.deporteService.updateDeportes(this.token, this.deporte.iddeporte, this.deporte)
+      .then((user) => {
+        let respuesta = JSON.parse(user["_body"]);
+        this.editConfirm();
         this.navCtrl.setRoot(HomePage, {
-          token: this.token
-        })
-      })
-      .catch((err) => {
+          token: respuesta.token
+        });
+      }).catch((err) => {
         console.log(err);
       })
+  }
+
+  editConfirm() {
+    const alert = this.alertCtrl.create({
+      title: 'Actualizado',
+      subTitle: 'El deporte se ha actualizado exitosamente',
+      buttons: ['Aceptar']
+    });
+    alert.present();
   }
 
 }
