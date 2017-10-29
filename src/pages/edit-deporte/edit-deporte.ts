@@ -43,7 +43,6 @@ export class EditDeportePage {
         console.log(err);
       })
   }
-
   editConfirm() {
     const alert = this.alertCtrl.create({
       title: 'Actualizado',
